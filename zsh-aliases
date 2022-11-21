@@ -63,6 +63,7 @@ alias rm='rm -i'
 alias cp='cp -i'
 # Custom git commands
 alias ga='git add -u'
+alias gb='git branch'
 alias gc='git commit -m'
 alias gco='git checkout'
 alias gd='git diff'
@@ -70,7 +71,7 @@ alias gp='git push'
 alias gpo='git pull origin'
 alias gmm='git merge master'
 alias gs='git status'
-alias gsb='git branch | grep tg_'
+alias gsb='git branch | grep vl_'
 alias gst='git stash'
 alias glogs='git log --oneline --decorate --all --graph'
 gitpush() {
@@ -80,8 +81,43 @@ gitpush() {
     git push
 }
 alias gpall=gitpush
+gitmergemaster() {
+    git checkout -
+    git pull
+    git checkout -
+    git merge master
+}
+alias gmash=gitmergemaster
 # custom django commands
 alias pm='python manage.py migrate'
 alias pmm='python manage.py makemigrations'
 alias prun='python manage.py runserver'
 alias psh='python manage.py shell'
+# custom docker commands
+# support Compose v2 as docker CLI plugin
+(( ${+commands[docker-compose]} )) && dccmd='docker-compose' || dccmd='docker compose'
+
+alias dco="$dccmd"
+alias dcb="$dccmd build"
+alias dce="$dccmd exec"
+alias dcps="$dccmd ps"
+alias dcrestart="$dccmd restart"
+alias dcrm="$dccmd rm"
+alias dcr="$dccmd run"
+alias dcstop="$dccmd stop"
+alias dcup="$dccmd up"
+alias dcupb="$dccmd up --build"
+alias dcupd="$dccmd up -d"
+alias dcdn="$dccmd down"
+alias dcl="$dccmd logs"
+alias dclf="$dccmd logs -f"
+alias dcpull="$dccmd pull"
+alias dcstart="$dccmd start"
+alias dck="$dccmd kill"
+alias dpm="docker exec -it django_web python -Wignore manage.py migrate"
+alias dpmm="docker exec -it django_web python -Wignore manage.py makemigrations"
+alias dps="docker exec -it django_web python -Wignore manage.py shell"
+alias dpsm="docker exec -it django_web python -Wignore manage.py showmigrations"
+alias dbash="docker exec -it django_web bash"
+
+unset dccmd
